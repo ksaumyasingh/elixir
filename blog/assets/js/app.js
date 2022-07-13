@@ -21,40 +21,6 @@ import "../css/app.css"
 
 // Include phoenix_html to handle method=PUT/DELETE in forms and buttons.
 import "phoenix_html"
-import {Socket, Presence } from "phoenix"
-
-let user = document.getElementById("user").innerText
-let socket=new Socket("/live", {params: {user: user}})
-socket.connect()
-let presences={}
-let formatedTimestamp=(Ts) => {
-    let date= new Date(Ts)
-    return date.toLocaleDateString()
-}
-let listBy=(user,{metas: metas}) => {
-    return {
-        user: user,onlineAt: formatedTimestamp(metas[0].online_at)
-    }
-}
-let userList = document.getElementById("userList")
-let render = (presences) => {
-    userList.innerHTML = Presence.list(presences, listBy)
-        .map(presence => `
-            <li>
-                ${presence.user}
-                <br>
-                <small>online since ${presence.onlineAt}</small>
-            </li>
-        `)
-        .join("")
-}
-
-let room = socket.channel("room:lobby")
-room.on("presence_state", state => {
-    presences=Presence.syncState(presences, state)
-    render(presences)
-})
-room.join()
 // Establish Phoenix Socket and LiveView configuration.
 import {Socket} from "phoenix"
 import {LiveSocket} from "phoenix_live_view"
