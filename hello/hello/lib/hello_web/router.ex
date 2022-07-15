@@ -1,11 +1,11 @@
-defmodule BlogWeb.Router do
-  use BlogWeb, :router
+defmodule HelloWeb.Router do
+  use HelloWeb, :router
 
   pipeline :browser do
     plug :accepts, ["html"]
     plug :fetch_session
     plug :fetch_live_flash
-    plug :put_root_layout, {BlogWeb.LayoutView, :root}
+    plug :put_root_layout, {HelloWeb.LayoutView, :root}
     plug :protect_from_forgery
     plug :put_secure_browser_headers
   end
@@ -14,16 +14,14 @@ defmodule BlogWeb.Router do
     plug :accepts, ["json"]
   end
 
-  scope "/", BlogWeb do
+  scope "/", HelloWeb do
     pipe_through :browser
 
     get "/", PageController, :index
-    get "/hello", HelloController, :index
-    get "/hello/:messenger", HelloController, :show
   end
 
   # Other scopes may use custom stacks.
-  # scope "/api", BlogWeb do
+  # scope "/api", HelloWeb do
   #   pipe_through :api
   # end
 
@@ -40,7 +38,7 @@ defmodule BlogWeb.Router do
     scope "/" do
       pipe_through :browser
 
-      live_dashboard "/dashboard", metrics: BlogWeb.Telemetry
+      live_dashboard "/dashboard", metrics: HelloWeb.Telemetry
     end
   end
 

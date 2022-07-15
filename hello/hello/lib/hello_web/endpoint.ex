@@ -1,13 +1,13 @@
-defmodule BlogWeb.Endpoint do
-  use Phoenix.Endpoint, otp_app: :blog
+defmodule HelloWeb.Endpoint do
+  use Phoenix.Endpoint, otp_app: :hello
 
   # The session will be stored in the cookie and signed,
   # this means its contents can be read but not tampered with.
   # Set :encryption_salt if you would also like to encrypt it.
   @session_options [
     store: :cookie,
-    key: "_blog_key",
-    signing_salt: "MQSuhjXX"
+    key: "_hello_key",
+    signing_salt: "kgc85XwA"
   ]
 
   socket "/live", Phoenix.LiveView.Socket, websocket: [connect_info: [session: @session_options]]
@@ -18,7 +18,7 @@ defmodule BlogWeb.Endpoint do
   # when deploying your static files in production.
   plug Plug.Static,
     at: "/",
-    from: :blog,
+    from: :hello,
     gzip: false,
     only: ~w(assets fonts images favicon.ico robots.txt)
 
@@ -28,7 +28,7 @@ defmodule BlogWeb.Endpoint do
     socket "/phoenix/live_reload/socket", Phoenix.LiveReloader.Socket
     plug Phoenix.LiveReloader
     plug Phoenix.CodeReloader
-    plug Phoenix.Ecto.CheckRepoStatus, otp_app: :blog
+    plug Phoenix.Ecto.CheckRepoStatus, otp_app: :hello
   end
 
   plug Phoenix.LiveDashboard.RequestLogger,
@@ -46,14 +46,5 @@ defmodule BlogWeb.Endpoint do
   plug Plug.MethodOverride
   plug Plug.Head
   plug Plug.Session, @session_options
-  plug :introspect
-  plug BlogWeb.Router
-  def introspect(conn, _opts) do
-    IO.puts """
-    Verb: #{inspect(conn.method)}
-    Host: #{inspect(conn.host)}
-    Header: #{inspect(conn.req_headers)}
-    """
-    conn
-  end
+  plug HelloWeb.Router
 end
