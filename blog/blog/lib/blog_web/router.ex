@@ -38,6 +38,12 @@ defmodule BlogWeb.Router do
       resources "/order", PostController
     end
   end
+  # Interestingly, we can use multiple scopes with the same path as long as we are careful not to duplicate routes.
+  scope "/", AnotherAppWeb do
+    pipe_through :browser
+
+    resources "/app", AppController
+  end
 
   scope "/admin", HelloWeb.Admin, as: :admin do
     pipe_through :browser
