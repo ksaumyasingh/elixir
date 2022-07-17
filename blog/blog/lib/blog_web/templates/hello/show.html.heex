@@ -1,4 +1,10 @@
 <section class="phx-hero">
+    <%# This is significant because we can use the page_path function in a template to link to the root of our application. We can then use this helper in our templates: %>
+
+    <%= link "Welcome Page! using path helper", to: Routes.page_path(@conn, :index) %><br>
+    <%= link "Hello Page! using path helper", to: Routes.hello_path(@conn, :index) %><br>
+    URL = <%= Routes.hello_url(@conn, :index) %><br>
+    PATH = <%= Routes.hello_path(@conn, :index) %>
         <p>Locale inside controller: <%= @locale %></p>
     <h2>Hello world,from <%= @messenger %>!</h2>
         <p>Locale2 inside show function: <%= @locale2 %></p>

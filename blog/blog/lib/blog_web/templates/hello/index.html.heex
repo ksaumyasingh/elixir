@@ -1,5 +1,6 @@
 <section class="phx-hero">
     <h2>Hello world,from phoenix!</h2>
+    <%= link "Hello Page! using path helper", to: Routes.hello_path(@conn, :show , "Saumya") %><br>
     <p>Locale inside controller: <%= @locale %></p>
 </section>
 <section class="phx-hero">

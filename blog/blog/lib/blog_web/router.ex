@@ -1,6 +1,6 @@
 defmodule BlogWeb.Router do
   use BlogWeb, :router
-
+  # simply makes Phoenix router functions available in our particular router.
   pipeline :browser do
     plug :accepts, ["html"]
     plug :fetch_session
@@ -14,13 +14,35 @@ defmodule BlogWeb.Router do
   pipeline :api do
     plug :accepts, ["json"]
   end
-
+  # /s/
   scope "/", BlogWeb do
     pipe_through :browser
+    # pipelines allow a set of plugs to be applied to different sets of routes.
 
     get "/", PageController, :index
+    # get is a Phoenix macro that corresponds to the HTTP verb GET.
+    #  Similar macros exist for other HTTP verbs, including POST, PUT, PATCH, DELETE, OPTIONS, CONNECT, TRACE, and HEAD.
+    # The router supports other macros besides those for HTTP verbs like get, post, and put. The most important among them is resources.
+
     get "/hello", HelloController, :index
     get "/hello/:messenger", HelloController, :show
+    # resource with all func
+    resources "/users", UserController
+    # resource with only two func
+    resources "/posts", PostController, only: [:index, :show]
+    # resource with all func except delete
+    resources "/comments", CommentController, except: [:delete]
+    resources "/reviews", ReviewController
+    # nested resource
+    resources "/client", UserController do
+      resources "/order", PostController
+    end
+  end
+
+  scope "/admin", HelloWeb.Admin, as: :admin do
+    pipe_through :browser
+
+    resources "/review", ReviewController
   end
 
   # Other scopes may use custom stacks.
